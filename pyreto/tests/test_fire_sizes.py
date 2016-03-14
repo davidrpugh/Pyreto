@@ -4,7 +4,7 @@ import pandas as pd
 from pyreto import distributions
 
 
-def test_fire_sizes(desired_alpha=2.2, desired_xmin=6234, decimal=1):
+def test_fire_sizes(desired_alpha=2.2, desired_xmin=6324, decimal=1):
     """Replicate Clauset et al (2009) analysis of forest fires."""
     data_url = "http://tuvalu.santafe.edu/~aaronc/powerlaws/data/fires.txt"
     fire_size = pd.read_csv(data_url, names=['acres'])
