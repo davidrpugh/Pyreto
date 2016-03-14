@@ -22,8 +22,8 @@ before_install:
   - conda update --yes conda
 
 install:
-  - conda install --yes python=$TRAVIS_PYTHON_VERSION numpy scipy pandas pip matplotlib
-  - pip install coveralls coverage seaborn
+  - conda install --yes python=$TRAVIS_PYTHON_VERSION matplotlib numpy pandas pillow pip pytest pytest-cov scipy statsmodels
+  - pip install coveralls seaborn
   - python setup.py install
 
 script:

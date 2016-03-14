@@ -24,7 +24,7 @@ CLASSIFIERS = ['Development Status :: 3 - Alpha',
                'Topic :: Scientific/Engineering',
                ]
 
-PACKAGES = ['pyreto', ]
+PACKAGES = ['pyreto', 'pyreto.tests']
 
 setup(
     name="Pyreto",

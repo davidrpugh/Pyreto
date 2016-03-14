@@ -5,8 +5,8 @@ Pyreto
 
 .. |Build Status| image:: https://travis-ci.org/davidrpugh/Pyreto.svg?branch=master
    :target: https://travis-ci.org/davidrpugh/Pyreto
-.. |Coverage Status| image:: https://coveralls.io/repos/davidrpugh/Pyreto/badge.svg?branch=master
-   :target: https://coveralls.io/r/davidrpugh/Pyreto?branch=master
+.. |Coverage Status| image:: https://coveralls.io/repos/github/davidrpugh/Pyreto/badge.svg?branch=master
+   :target: https://coveralls.io/github/davidrpugh/Pyreto?branch=master
 .. |Code Climate| image:: https://codeclimate.com/github/davidrpugh/Pyreto/badges/gpa.svg
    :target: https://codeclimate.com/github/davidrpugh/Pyreto
 .. |Latest Version| image:: https://img.shields.io/pypi/v/Pyreto.svg
