@@ -1,0 +1,4 @@
+name: pyreto
+
+dependencies:
+  - python=3.5
