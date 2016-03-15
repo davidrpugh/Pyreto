@@ -40,7 +40,7 @@ I am in the process of putting together a collection of example notebooks demons
 
 I am also looking to collect notebooks replicating (or not!) previous studies that have fit Pareto distributions to data. If you would like to contribute a notebook, please submit a `Pull Request`_.
 
-.. Binder: http://mybinder.org/
+.. _Binder: http://mybinder.org/
 .. _`Pull Request`: https://help.github.com/articles/using-pull-requests/
 .. |Launch Binder| image:: http://mybinder.org/badge.svg
    :target: http://mybinder.org/repo/davidrpugh/Pyreto
