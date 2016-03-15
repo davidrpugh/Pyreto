@@ -1,0 +1,8 @@
+@Manual{Pyreto,
+        title = {\pkg{Pyreto}: a \proglang{Python} library for fitting Pareto distributions to data},
+        author = {David R. Pugh},
+        organization = {Pyreto},
+        year = {2016},
+        doi = {???},
+        url = {https://github.com/davidrpugh/Pyreto}
+        }
