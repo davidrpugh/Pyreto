@@ -45,8 +45,8 @@ class Distribution:
     @classmethod
     def _pdf(cls, x, xmin, *args, **params):
         """Probability density function (pdf)."""
-        C = cls._normalization_constant(x, *args, **params)
-        f = cls._density_function(xmin, *args, **params)
+        C = cls._normalization_constant(xmin, *args, **params)
+        f = cls._density_function(x, *args, **params)
         return C * f
 
     @classmethod
@@ -169,7 +169,7 @@ class Pareto(Distribution):
             tmp_result = cls.fit(tmp_data, xmin, quantile, discrete, approx,
                                  method)
             ks_distances[i] = tmp_result.D
-        pvalue = ks_distances[ks_distances <= result.D].mean()
+        pvalue = ks_distances[ks_distances > result.D].mean()
         return pvalue, ks_distances
 
     @staticmethod
@@ -183,7 +183,24 @@ class Pareto(Distribution):
 
     @classmethod
     def _fit_maximum_likelihood(cls, xmin, clean_data, discrete, approx):
-        """Maximum likelihood estimator of the scaling exponent."""
+        r"""
+        Fit a Pareto distribution to some data using maximum likelihood.
+
+        Notes
+        -----
+        For a given value of $x_{min}$, the maximum likelihood estimator for
+        the scaling exponent is
+        \begin{equation}\label{eq:plawMLE}
+            \hat{\alpha} = 1 +  n\left[\sum_{i=1}^{n}\mathrm{ln}\ \left(\frac{x_{i}}{x_{min}}\right)\right]^{-1}.
+        \end{equation}
+        Equation \ref{eq:plawMLE}, is equivalent to the \cite{hill1975simple}
+        estimator, and has been shown to be asymptotically normal
+        \cite{hall1982some} and consistent \cite{mason1982laws}. The standard
+        error of $\hat{\alpha}$ is
+        \begin{equation}\label{eq:seplawMLE}
+            \sigma = \frac{\hat{\alpha} - 1}{\sqrt{n}} + \mathcal{O}\left(n^{-1}\right)
+        \end{equation}
+        """
         if discrete:
             alpha_hat, tail_data = cls._mle_discrete(xmin, clean_data, approx)
         else:
