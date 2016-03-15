@@ -42,4 +42,5 @@ I am also looking to collect notebooks replicating (or not!) previous studies th
 
 .. Binder: http://mybinder.org/
 .. _`Pull Request`: https://help.github.com/articles/using-pull-requests/
-.. |Launch Binder| image:: http://mybinder.org/badge.svg :target: http://mybinder.org/repo/davidrpugh/Pyreto
+.. |Launch Binder| image:: http://mybinder.org/badge.svg
+   :target: http://mybinder.org/repo/davidrpugh/Pyreto
