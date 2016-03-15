@@ -24,7 +24,7 @@ CLASSIFIERS = ['Development Status :: 3 - Alpha',
                'Topic :: Scientific/Engineering',
                ]
 
-PACKAGES = ['pyreto', 'pyreto.testing']
+PACKAGES = ['pyreto', 'pyreto.tests']
 
 setup(
     name="Pyreto",
@@ -35,6 +35,6 @@ setup(
     license="MIT License",
     author="davidrpugh",
     author_email="david.pugh@maths.ox.ac.uk",
-    url='https://github.com/davidrpugh/pyreto',
+    url='https://github.com/davidrpugh/Pyreto',
     classifiers=CLASSIFIERS,
     )
