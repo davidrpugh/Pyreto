@@ -36,7 +36,7 @@ Example notebooks
 -----------------
 |Launch Binder|
 
-I am in the process of putting together a collection of example notebooks demonstrating functionality and usage of the Pyreto package. The easiest way to try out Pyreto is to simply click the launch the notebooks on `Binder`_ by clicking the "Launch Binder" button above.
+I am in the process of putting together a collection of example notebooks demonstrating functionality and usage of the Pyreto package. The easiest way to try out Pyreto is to simply launch the notebooks on `Binder`_ by clicking the "Launch Binder" button above.
 
 I am also looking to collect notebooks replicating (or not!) previous studies that have fit Pareto distributions to data. If you would like to contribute a notebook, please submit a `Pull Request`_.
 
