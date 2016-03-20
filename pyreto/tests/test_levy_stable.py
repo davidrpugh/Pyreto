@@ -5,7 +5,7 @@ from .. import distributions
 from . import utilities
 
 # Fit the pareto distribution to Levy-Stable data
-DESIRED_ALPHA = stats.uniform.rvs(1, 2)
+DESIRED_ALPHA = stats.uniform.rvs(1, 3)
 BETA = 1.0  # forces rvs to be strictly positive
 STABLE_RVS = stats.levy_stable.rvs(DESIRED_ALPHA - 1, BETA, size=1000)
 STABLE_DATA = pd.Series(STABLE_RVS, name='samples')
