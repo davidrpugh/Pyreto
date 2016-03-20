@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from scipy import integrate, optimize, special, stats
+from scipy import optimize, stats
 import statsmodels as sm
 
 from . import results
@@ -49,16 +49,16 @@ class Distribution:
 class Exponential(Distribution):
 
     @classmethod
-    def fit(cls, data, xmin):
+    def fit(cls, data, floc, *args, **kwargs):
         """Fit Exponential distribution to data using maximum likelihood."""
         cleaned_data = cls._clean_data(data)
-        tail_data = cleaned_data[cleaned_data >= xmin]
-        gamma_hat = 1 / np.mean(tail_data - xmin)
+        _, tail = cls._split_data(cleaned_data)
+        gamma_hat = 1 / np.mean(tail - floc)
 
         # create the FitResult object...
-        n_tail = tail_data.count()
+        n_tail = tail.count()
         gamma_se = gamma_hat / n_tail
-        log_likelihood = cls._log_likelihood(tail_data.values, xmin, gamma_hat)
+        log_likelihood = cls._log_likelihood(tail.values, floc, gamma_hat)
         result_kwargs = {'params': {'gamma': gamma_hat}, 'n_tail': n_tail,
                          'standard_errors': {'gamma': gamma_se},
                          'log_likelihood': log_likelihood, 'D': None}
@@ -78,23 +78,12 @@ class LogNormal(Distribution):
         # create the FitResult object...
         n_tail = data.count()
         log_likelihood = cls.logpdf(data, s, loc, scale)
-        result_kwargs = {'params': {'s': s, 'loc': loc, 'scale': scale}, 'n_tail': n_tail,
-                         'standard_errors': {}, 'log_likelihood': log_likelihood, 'D': None}
+        result_kwargs = {'params': {'s': s, 'loc': loc, 'scale': scale},
+                         'n_tail': n_tail, 'standard_errors': {},
+                         'log_likelihood': log_likelihood, 'D': None}
         result = results.FitResult(**result_kwargs)
 
         return result
-
-    @classmethod
-    def _cdf(cls, x, xmin, mu, sigma):
-        return integrate.quad(cls._pdf, xmin, x, args=(xmin, mu, sigma))
-
-    @staticmethod
-    def _density_function(x, mu, sigma):
-        return (1 / x) * np.exp(-((np.log(x) - mu)**2 / (2 * sigma**2)))
-
-    @staticmethod
-    def _normalization_constant(xmin, mu, sigma):
-        return (2 / (np.pi * sigma**2))**0.5 * (special.erfc((np.log(xmin) - mu) / (2**0.5 * sigma)))**-1
 
 
 class Pareto(Distribution):
