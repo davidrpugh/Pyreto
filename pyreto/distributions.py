@@ -48,19 +48,19 @@ class Distribution:
 
 class Exponential(Distribution):
 
+    _distribution = stats.expon
+
     @classmethod
     def fit(cls, data, floc, *args, **kwargs):
         """Fit Exponential distribution to data using maximum likelihood."""
-        cleaned_data = cls._clean_data(data)
-        _, tail = cls._split_data(cleaned_data)
-        gamma_hat = 1 / np.mean(tail - floc)
+        _, tail = cls._split_data(data, floc)
+        lambda_hat = 1 / np.mean(tail - floc)
 
         # create the FitResult object...
         n_tail = tail.count()
-        gamma_se = gamma_hat / n_tail
-        log_likelihood = cls._log_likelihood(tail.values, floc, gamma_hat)
-        result_kwargs = {'params': {'gamma': gamma_hat}, 'n_tail': n_tail,
-                         'standard_errors': {'gamma': gamma_se},
+        log_likelihood = cls.logpdf(tail, loc=floc, scale=1 / lambda_hat)
+        result_kwargs = {'params': {'loc': floc, 'scale': 1 / lambda_hat},
+                         'n_tail': n_tail, 'standard_errors': {'loc': None, 'scale': None},
                          'log_likelihood': log_likelihood, 'D': None}
         result = results.FitResult(**result_kwargs)
 
@@ -73,11 +73,12 @@ class LogNormal(Distribution):
 
     @classmethod
     def fit(cls, data, floc, *args, **kwargs):
+        _, tail = cls._split_data(data, floc)
         s, loc, scale = cls._distribution.fit(data, *args, floc=floc, **kwargs)
 
         # create the FitResult object...
-        n_tail = data.count()
-        log_likelihood = cls.logpdf(data, s, loc, scale)
+        n_tail = tail.count()
+        log_likelihood = cls.logpdf(tail, s, loc, scale)
         result_kwargs = {'params': {'s': s, 'loc': loc, 'scale': scale},
                          'n_tail': n_tail, 'standard_errors': {},
                          'log_likelihood': log_likelihood, 'D': None}
@@ -259,23 +260,25 @@ class Pareto(Distribution):
 
 class StretchedExponential(Distribution):
 
+    _distribution = stats.exponweib
+
     @classmethod
-    def fit(cls, data, xmin):
+    def fit(cls, data, floc):
         """
         Fit Stretched Exponential distribution to data using maximum
         likelihood.
 
         """
-        raise NotImplementedError
+        _, tail = cls._split_data(data, floc)
+        a, c, loc, scale = cls._distribution.fit(data, fa=1, floc=floc)
 
-    @classmethod
-    def _cdf(cls, x, xmin, beta, gamma):
-        raise NotImplementedError
+        # create the FitResult object...
+        n_tail = tail.count()
+        log_likelihood = cls.logpdf(tail, a, c, loc, scale)
+        standard_errors = {'a': None, 'c': None, 'loc': None, 'scale': None}
+        result_kwargs = {'params': {'a': a, 'c': c, 'loc': loc, 'scale': scale},
+                         'n_tail': n_tail, 'standard_errors': standard_errors,
+                         'log_likelihood': log_likelihood, 'D': None}
+        result = results.FitResult(**result_kwargs)
 
-    @staticmethod
-    def _density_function(x, beta, gamma):
-        return x**(beta - 1) * np.exp(-gamma * x**beta)
-
-    @staticmethod
-    def _normalization_constant(xmin, beta, gamma):
-        return beta * gamma * np.exp(gamma * xmin**beta)
+        return result
