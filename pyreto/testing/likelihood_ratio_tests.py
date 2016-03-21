@@ -1,7 +1,7 @@
 from scipy import stats
 
 
-def vuong_likelihood_ratio_test(result1, result2):
+def vuong_test(result1, result2):
     """Vuong likelihood ratio test."""
     assert result1.n_tail == result2.n_tail
     # compute the components of the vuong statistic

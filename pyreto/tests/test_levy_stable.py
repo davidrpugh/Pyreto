@@ -2,7 +2,7 @@ import pandas as pd
 from scipy import stats
 
 from .. import distributions
-from . import utilities
+from .. import testing
 
 # Fit the pareto distribution to Levy-Stable data
 DESIRED_ALPHA = stats.uniform.rvs(1, 3)
@@ -17,7 +17,7 @@ RESULT = distributions.Pareto.fit(STABLE_DATA, scale=None, quantile=QUANTILE,
 
 def test_levy_stable_estimation(size=0.01):
     """Test the estimation of the Levy-Stable scaling exponent."""
-    utilities.test_scaling_exponent_estimation(DESIRED_ALPHA, RESULT, size)
+    testing.utilities.test_scaling_exponent_estimation(DESIRED_ALPHA, RESULT, size)
 
 
 def test_levy_stable_goodness_of_fit(size=0.05):
